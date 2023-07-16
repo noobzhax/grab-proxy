@@ -69,7 +69,7 @@ def gethtmljsraw(url):
         
         driver = webdriver.Chrome(service=service, options=chrome_options)
         driver.get(url)
-        logger.info(url)
+        LOGGER.info(url)
         html = driver.page_source
         driver.quit()
         return html
@@ -77,11 +77,11 @@ def gethtmljsraw(url):
         error_message = str(e)
         if "ERR_SSL_PROTOCOL_ERROR" in error_message:
             # Log the skipped error
-            logger.warning(f"Skipping URL due to SSL protocol error: {url}")
+            LOGGER.warning(f"Skipping URL due to SSL protocol error: {url}")
             return None
         else:
             # Log other WebDriverException errors
-            logger.exception(f"Failed to fetch HTML for {url}: {error_message}")
+            LOGGER.exception(f"Failed to fetch HTML for {url}: {error_message}")
             return None
 
 def gethtml(url, log):
