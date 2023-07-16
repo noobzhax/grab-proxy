@@ -56,7 +56,7 @@ def gethtmljsraw(url):
     chrome_options.add_argument("window-size=600,600")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--log-level=3")
-    driver = webdriver.Chrome("./chromedriver", options=chrome_options)
+    driver = webdriver.Chrome(executable_path="./chromedriver", options=chrome_options)
     driver.get(url)
     html = driver.page_source
     driver.quit()
