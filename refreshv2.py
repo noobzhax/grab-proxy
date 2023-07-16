@@ -330,6 +330,7 @@ def start():
     create_file_if_not_exists("./Sources.txt")
     create_file_if_not_exists("./proxies/raw.txt")
     create_file_if_not_exists("./proxies/provider.csv")
+    create_file_if_not_exists("./proxies/working.txt")
 
     with open("./Sources.txt", "r") as f:
         sources = f.readlines()
