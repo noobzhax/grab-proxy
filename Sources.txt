@@ -30,14 +30,12 @@ MULTIPLE PAGES: ([page] for automatic Sitenumber, [0-999] for max crawled pages)
 [25]https://free-proxy-list.com/?page=[page]&port=&up_time=0
 
 NEED JS:
-[15][js]https://advanced.name/freeproxy?page=[page]
 [js]https://www.proxydocker.com/
 [js]https://proxyservers.pro/
 [js]https://proxy-daily.com/
 [js]https://premiumproxy.net/full-proxy-list
 [js]https://www.proxynova.com/proxy-server-list/
 [js]https://premproxy.com/list/
-[js]https://apiproxyfree.com/
 [js]http://www.cybersyndrome.net/pla6.html
 [js]https://openproxy.space/list/http
 [js]https://openproxy.space/list/socks4
