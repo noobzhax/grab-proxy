@@ -4,13 +4,19 @@ from ftplib import parse150
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from selenium.common.exceptions import WebDriverException
 from bs4 import BeautifulSoup
-import re,os
+import re, os, logging
 import threading
 import requests
 import concurrent.futures
 
 session = requests.Session()
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+LOGGER = logging.getLogger(__name__)
+
 
 def getrooturl(url):
     if "raw.githubusercontent.com" in url:
@@ -51,19 +57,32 @@ def gethtmljs(url, log):
     return proxies
 
 def gethtmljsraw(url):
-    service = Service(executable_path="./chromdriver")
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("disable-gpu")
-    chrome_options.add_argument("window-size=600,600")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--log-level=3")
-    chrome_options.add_argument("--ignore-certificate-errors")
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-    driver.get(url)
-    html = driver.page_source
-    driver.quit()
-    return html
+    try:
+        service = Service(executable_path="./chromedriver")
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("disable-gpu")
+        chrome_options.add_argument("window-size=600,600")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--log-level=3")
+        chrome_options.add_argument("--ignore-certificate-errors")
+        
+        driver = webdriver.Chrome(service=service, options=chrome_options)
+        driver.get(url)
+        logger.info(url)
+        html = driver.page_source
+        driver.quit()
+        return html
+    except WebDriverException as e:
+        error_message = str(e)
+        if "ERR_SSL_PROTOCOL_ERROR" in error_message:
+            # Log the skipped error
+            logger.warning(f"Skipping URL due to SSL protocol error: {url}")
+            return None
+        else:
+            # Log other WebDriverException errors
+            logger.exception(f"Failed to fetch HTML for {url}: {error_message}")
+            return None
 
 def gethtml(url, log):
     proxies = []
