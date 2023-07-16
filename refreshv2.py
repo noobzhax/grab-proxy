@@ -4,7 +4,7 @@ from ftplib import parse150
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
-import re
+import re,os
 import threading
 import requests
 import concurrent.futures
@@ -316,24 +316,33 @@ def filterold():
     with open("./README.md", "w") as f:
         f.write(readme)
 
+def create_directory_if_not_exists(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+def create_file_if_not_exists(file_path):
+    if not os.path.exists(file_path):
+        with open(file_path, "w"):
+            pass
+
 def start():
+    create_directory_if_not_exists("./proxies")
+    create_file_if_not_exists("./Sources.txt")
+    create_file_if_not_exists("./proxies/raw.txt")
+    create_file_if_not_exists("./proxies/provider.csv")
+
     with open("./Sources.txt", "r") as f:
         sources = f.readlines()
 
-    with open("./proxies/raw.txt", "w"):
-        pass
-    with open("./proxies/provider.csv", "w"):
-        pass
     with open("./proxies/working.txt", "r") as f:
         oldworking = f.read()
+
     with open("./proxies/working-lastrun.txt", "w") as f:
         f.write(oldworking)
-    with open("./proxies/working.csv", "w"):
-        pass
-    with open("./proxies/misconfigured.csv", "w"):
-        pass
-    with open("./proxies/excluded.csv", "w"):
-        pass
+
+    create_file_if_not_exists("./proxies/working.csv")
+    create_file_if_not_exists("./proxies/misconfigured.csv")
+    create_file_if_not_exists("./proxies/excluded.csv")
 
     threads = []
     log = ""
