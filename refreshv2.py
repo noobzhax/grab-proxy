@@ -125,13 +125,21 @@ def gethtmlraw(url):
     return html
 
 def extract(html):
-    soup = BeautifulSoup(html, 'html.parser')
-    text = soup.get_text(separator=":")
-    text = text.replace("\n", ":").replace(" ", "")
-    while "::" in text:
-        text = text.replace("::", ":")
-    proxies = proxy_pattern.findall(text)
-    return proxies
+    if html is None:
+        return []
+
+    try:
+        soup = BeautifulSoup(html, 'html.parser')
+        text = soup.get_text(separator=":")
+        text = text.replace("\n", ":").replace(" ", "")
+        while "::" in text:
+            text = text.replace("::", ":")
+        proxies = proxy_pattern.findall(text)
+        return proxies
+    except Exception as e:
+        # Log the error or handle it as desired
+        print(f"Failed to extract proxies from HTML: {str(e)}")
+        return []
 
 def normalizer():
     with open("./proxies/provider.csv", "r") as f:
