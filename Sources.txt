@@ -102,3 +102,6 @@ https://raw.githubusercontent.com/hookzof/socks5_list/master/proxy.txt
 https://raw.githubusercontent.com/rdavydov/proxy-list/main/proxies/socks5.txt
 https://raw.githubusercontent.com/UptimerBot/proxy-list/main/proxies/socks5.txt
 https://api.openproxylist.xyz/socks5.txt
+
+ALL RAW:
+https://rcloak.com/api/proxies/raw?protocol=all
